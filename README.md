@@ -1,6 +1,6 @@
 # generalization.sh
 ## Description
-**generalization.sh** is a command line tool which generalize (sysprep) system for CentOS 7. 
+**generalization.sh** is a command line tool which generalize (sysprep) system for CentOS 7 and 8. 
 ## Features
 generalization.sh removes or regenerates following system-specific files and configurations.
 - Log files (mainly in  ```/var/log/*```)
@@ -8,8 +8,8 @@ generalization.sh removes or regenerates following system-specific files and con
 - cron configurations
 - DHCP status files
 - YUM cache files
-- YUM UUID
-- YUM transaction history
+- YUM UUID (Only CentOS 7)
+- YUM transaction history (Optional)
 - SSH host keys
 - ```.ssh``` directories (contain authorized_keys and known_hosts)
 - tmp files
