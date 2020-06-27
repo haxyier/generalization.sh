@@ -8,7 +8,7 @@
 # This script needs root privileges.
 # 
 #
-# Compatible with >= CentOS 7.1
+# Compatible with >= CentOS 7.1, CentOS 8.0
 ###############################################
 
 ### declare functions ###
@@ -45,6 +45,10 @@ esac
 trap 'print_error $LINENO' ERR
 
 
+# Detect OS Version.
+OS_VERSION=$(cat /etc/redhat-release | sed -r "s/^.*release ([0-9]).*$/\1/")
+
+
 #
 # Remove unnecessary files.
 #
@@ -65,7 +69,10 @@ find /var/log -type f -print0 | xargs -0 --no-run-if-empty truncate -s 0
 # Remove received emails.
 echo "Removing received emails..."
 
-systemctl stop postfix
+if [[ -e /usr/lib/systemd/system/postfix.service ]]; then
+    systemctl stop postfix
+fi
+
 find /var/spool/mail -type f -print0 | xargs -0 --no-run-if-empty truncate -s 0
 
 
@@ -87,6 +94,7 @@ echo "Cleaning up YUM cache files..."
 yum clean all > /dev/null
 
 
+#TODO: Enable working on CentOS 8.
 # Remove YUM transaction history（optional）
 #echo "Removing YUM transaction history..."
 
@@ -134,7 +142,7 @@ rm_if_exists "/root/anaconda-ks.cfg"
 #vgchange -u <vg-name>
 
 
-# Regenerate yum-uuid.
+# Regenerate yum-uuid (exists only CentOS 7).
 echo "Removing uuid using for YUM..."
 
 rm_if_exists "/var/lib/yum/uuid"
@@ -147,7 +155,7 @@ rm_if_exists "/var/lib/yum/uuid"
 # Remove system-specific firewall configurations.
 echo "Removing user-specific firewall rules..."
 
-truncate -s 0 "/etc/sysconfig/iptables"
+truncate -cs 0 "/etc/sysconfig/iptables"
 rm_if_exists "/etc/sysconfig/iptables.save"
 rm_if_exists "/etc/firewalld/services/*"
 rm_if_exists "/etc/firewalld/zones/*"
