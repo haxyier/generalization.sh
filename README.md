@@ -1,6 +1,6 @@
 # generalization.sh
 ## Description
-**generalization.sh** is a command line tool which generalize (sysprep) system for CentOS 7 and 8. 
+**generalization.sh** is a command line tool which generalize (sysprep) system for CentOS 7, 8 and Stream 8. 
 ## Features
 generalization.sh removes or regenerates following system-specific files and configurations.
 - Log files (mainly in  ```/var/log/*```)

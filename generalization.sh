@@ -8,7 +8,7 @@
 # This script needs root privileges.
 # 
 #
-# Compatible with >= CentOS 7.1, CentOS 8.0
+# Compatible with >=CentOS 7.1, =CentOS 8.x, =CentOS Stream 8
 ###############################################
 
 ### declare functions ###
